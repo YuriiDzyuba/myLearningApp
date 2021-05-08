@@ -1,42 +1,40 @@
-import * as firebase from "firebase";
-
-const CURRENT_ROW = "CURRENT_ROW"
-const NEW_NUMBER = "NEW_NUMBER"
-const NEW_HEADER = "NEW_HEADER"
-const NEW_CONTENT = "NEW_CONTENT"
-const NEW_PICTURE_URL = "NEW_PICTURE_URL"
+const NEW_LESSON_NUMBER = "NEW_LESSON_NUMBER"
+const NEW_LESSON_NAME = "NEW_LESSON_NAME"
+const NEW_LESSON_DESCRIPTION = "NEW_LESSON_DESCRIPTION"
+const NEW_LESSON_PICTURE_URL = "NEW_LESSON_PICTURE_URL"
 
 
 let initialState = {
-    rowNumber: "",
-    origin: "",
-    translation: "",
+    id: null,
+    lessonNumber: 1,
+    name: "",
+    description: "",
     pictureUrl: ""
 }
 
-export let currentRowReducer = (state = initialState, action) => {
+export let newLessonDescriptionReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CURRENT_ROW:
-            return {...state, ...action.payload}
-        case NEW_NUMBER:
-        case NEW_HEADER:
-        case NEW_CONTENT:
-        case NEW_PICTURE_URL:
-            return {...state, ...action.payload}
+        case NEW_LESSON_NUMBER:
+            return {...state, lessonNumber: action.text}
+        case NEW_LESSON_NAME:
+            return {...state, name: action.text}
+        case NEW_LESSON_DESCRIPTION:
+            return {...state, description: action.text}
+        case NEW_LESSON_PICTURE_URL:
+            return {...state, pictureUrl: action.text}
         default :
             return state
     }
 }
 
-export const currentRowToStateAC = (payload) => ({type: CURRENT_ROW, payload: payload,})
 
-export const onRowNumberChangeAC = (payload) => ({type: NEW_NUMBER, payload: payload,})
+export const addLessonNumberAC = (text) => ({type: NEW_LESSON_NUMBER, text: text,})
 
-export const onHeaderChangeAC = (payload) => ({type: NEW_HEADER, payload: payload,})
+export const addLessonNameAC = (text) => ({type: NEW_LESSON_NAME, text: text,})
 
-export const onContentChangeAC = (payload) => ({type: NEW_CONTENT, payload: payload,})
+export const addLessonDescriptionAC = (text) => ({type: NEW_LESSON_DESCRIPTION, text: text,})
 
-export const onPictureUrlChangeAC = (payload) => ({type: NEW_PICTURE_URL, payload: payload,})
+export const addLessonPictureUrlChangeAC = (text) => ({type: NEW_LESSON_PICTURE_URL, text: text,})
 
 
 

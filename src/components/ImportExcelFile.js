@@ -1,29 +1,45 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useRef, useState} from 'react'
 import {ExcelRenderer} from "react-excel-renderer";
-import {CardContent} from "./CardContent";
+import {useDispatch, useSelector} from "react-redux";
+import {addWordsToStateAC} from "../redux/wordsReducer";
+import {addPhrasesToStateAC} from "../redux/phraseReducer";
+import {TableMaker} from "./TableMaker";
 
-export const ImportExcelFile = () => {
 
-    const [selectedFile, setSelectedFile] = useState();
-    const [selectedJSONFile, setSelectedJSONFile] = useState("");
-    const [isFilePicked, setIsFilePicked] = useState(false);
+export const ImportExcelFile = ({selectFileHeader, type}) => {
 
-    const changeHandler = (event) => {
-        setSelectedFile(event.target.files[0]);
-        setIsFilePicked(true);
+    const [selectedFile, setSelectedFile] = useState("");
+
+    const dispatch = useDispatch()
+    const table = useSelector(state => state[type])
+
+    const selectFileHandler = (event) => {
+        let selectedFileCorrect = true
+        if (selectedFileCorrect) {
+            setSelectedFile(event.target.files[0]);
+        } else return alert("selected file incorrect!!!")
     };
 
-    const handleSubmission = () => {
-        if (isFilePicked) {
+    const confirmSelectedFile = () => {
+        if (selectedFile) {
             ExcelRenderer(selectedFile, (err, resp) => {
                 if (err) {
                     console.log(err);
-                } else {
-                    setSelectedJSONFile({
+                } else if (type === "words") {
+                    console.log("words")
+                    dispatch(addWordsToStateAC({
                         dataLoaded: true,
                         cols: resp.cols,
                         rows: resp.rows
-                    });
+                    }));
+
+                } else if (type === "phrases") {
+                    console.log("phrases")
+                    dispatch(addPhrasesToStateAC({
+                        dataLoaded: true,
+                        cols: resp.cols,
+                        rows: resp.rows
+                    }));
                 }
             })
         } else {
@@ -33,73 +49,44 @@ export const ImportExcelFile = () => {
     };
 
 
-    const tableMaker = () => {
-        let tableBody = selectedJSONFile.rows.map((e, i) => {
-            return (
-                <tr
-                    key={i}
-                    className={i % 2 === 0 ? "table-light" : "table-primary"}>
-                    <th scope="row">{i + 1}</th>
-                    <td>{e[0]}</td>
-                    <td>{e[1]}</td>
-                    <td>{e[2]}</td>
-                </tr>
-            )
-        })
-
-        return (
-            <table className="table">
-                <thead>
-                <tr className="table-primary">
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Picture url</th>
-                </tr>
-                </thead>
-                <tbody>
-                {tableBody}
-                </tbody>
-            </table>
-        )
-
-    }
-
     return (
         <Fragment>
-            <div className="row justify-content-md-center">
-                <div className="col-6 chooseFile">
-                    {isFilePicked ? (
-                        <p>
-                            <span>Filename: {selectedFile.name}  |</span>
+
+            <div className='d-flex flex-row mt-3 justify-content-center'>
+                <div className="col-12 chooseFile">
+                    {selectedFile ? (
+                        <h6 className="text-center mb-3">
+                            <span>Filename: {selectedFile.name} |</span>
                             <span>  Size: {selectedFile.size} bytes</span>
-                        </p>
+                        </h6>
                     ) : (
-                        <p>Select a file to show details</p>
+                        <h6 className="text-center">{selectFileHeader}</h6>
                     )}
 
                     <div className="row justify-content-md-center">
                         <div className="col-auto">
-                            <input type="file" name="file" className="form-control" onChange={changeHandler}></input>
+                            <input type="file" name="file" className="form-control" onChange={selectFileHandler}/>
                         </div>
                         <div className="col-auto">
-                            <button type="submit" className="btn btn-success mb-3" onClick={handleSubmission}>Confirm
+                            <button
+                                type="submit"
+                                className="btn btn-success mb-3"
+                                onClick={confirmSelectedFile}
+                            >
+                                Confirm
                             </button>
                         </div>
                     </div>
+
                 </div>
             </div>
+
             {
-                selectedJSONFile
-                &&
-                <CardContent cartItems={selectedJSONFile.rows}/>
-            }
-            {
-                selectedJSONFile
+                table.dataLoaded
                 &&
                 <div className="row justify-content-md-center">
                     <div className="tableWrapper">
-                        {tableMaker()}
+                        <TableMaker table={table} type={type}/>
                     </div>
                 </div>
             }

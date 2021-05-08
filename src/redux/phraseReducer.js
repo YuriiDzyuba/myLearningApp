@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 
-const WORD_SET = "WORD_SET"
-const B_B = "B_B"
+const PHRASE_SET = "PHRASE_SET"
+const CHANGED_PHRASE_ROW = "CHANGED_PHRASE_ROW"
 const C_C = "C_C"
 
 let initialState = {
@@ -10,12 +10,14 @@ let initialState = {
     rows: ""
 }
 
-export let wordsReducer = (state = initialState, action) => {
+export let phraseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case WORD_SET:
-            return {...state,...action.payload}
-        case B_B:
-            return {...state, password: action.text}
+        case PHRASE_SET:
+            return {...state, ...action.payload}
+        case CHANGED_PHRASE_ROW:
+            let newRowsArray = state.rows.filter((elem,index)=>index !== parseInt(action.previousNumber) - 1)
+            newRowsArray.splice(action.newNumber-1, 0, action.payload )
+            return {...state, rows: newRowsArray}
         case C_C:
             return {...state, register: action.text}
         default :
@@ -23,10 +25,15 @@ export let wordsReducer = (state = initialState, action) => {
     }
 }
 
-export const addWordsToStateAC = (payload) => ({type: WORD_SET, payload: payload,})
+export const addPhrasesToStateAC = (payload) => ({type: PHRASE_SET, payload: payload,})
 
-export const bbbbAC = (text) => ({type: B_B, text: text,})
-
+export const addChangedPhrasesRowAC = (previousNumber, newNumber, payload) => (
+    {
+        type: CHANGED_PHRASE_ROW,
+        previousNumber: previousNumber,
+        newNumber: newNumber,
+        payload: payload,
+    })
 export const ccccAC = () => ({type: C_C,})
 
 
