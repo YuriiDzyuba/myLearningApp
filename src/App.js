@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useContext} from 'react';
+import {BrowserRouter} from 'react-router-dom'
+import './App.scss';
+import {Routes} from "./components/Routes";
+import {Navbar} from "./components/Navbar";
+import {FireBaseContext} from "./context/FireBaseContext";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {Loader} from "./components/Loader";
+import {Provider} from "react-redux";
+import {store} from "./redux/store";
+import {ModalProvider} from "react-simple-hook-modal";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const  App =() =>{
+
+    const {auth} = useContext(FireBaseContext)
+    const [user, loading, error] = useAuthState(auth)
+    const routes = Routes(!!user)
+
+
+    return (
+        <Provider store={store}>
+        <BrowserRouter>
+            <div className="App">
+                <Navbar />
+                <ModalProvider>
+                <div className="container-fluid">
+                    {loading ? <Loader/> : routes}
+                </div>
+                </ModalProvider>
+            </div>
+        </BrowserRouter>
+        </Provider>
+    );
 }
 
-export default App;

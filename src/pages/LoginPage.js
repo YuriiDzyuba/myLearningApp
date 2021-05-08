@@ -1,22 +1,37 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import {logInAction} from "../functions/logInAction";
+import {useFormChanger} from "../hooks/useFormChanger";
+import {LogInForm} from "../components/LogInForm";
+import {FireBaseContext} from "../context/FireBaseContext";
+import firebase from "firebase";
 
-export const Login = () => {
+export const LoginPage = () => {
+
+    let {auth} = useContext(FireBaseContext)
+    const {changeHandler, form} = useFormChanger()
+
+    const logInHandler = async () => {
+        const {email, password} = form
+            let {user} = await auth.signInWithEmailAndPassword(email, password)
+        console.log(user)
+    }
+
     return (
-        <form>
-            <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+        <div className='row justify-content-md-center'>
+            <div className="col col-md-4">
+
+                <form name="logIN"
+                      onSubmit={e => {
+                          console.log("cfggcbcbvb")
+                          e.preventDefault()
+                          logInHandler()
+                      }
+                      }
+                >
+                    <LogInForm changeHandler={changeHandler}/>
+                </form>
             </div>
-            <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" className="form-control" id="exampleInputPassword1"/>
-            </div>
-            <div className="mb-3 form-check">
-                <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+        </div>
+
     )
 }
