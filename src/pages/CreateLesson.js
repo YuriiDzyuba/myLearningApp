@@ -1,15 +1,21 @@
 import React, {Fragment} from 'react'
-import {ImportExcelFile} from "../components/ImportExcelFile";
+import {useHistory} from 'react-router-dom'
+import {ImportExcelFile} from "../components/table/ImportExcelFile";
 import {useDispatch, useSelector} from "react-redux";
 import {AddTasks} from "../components/AddTasks";
 import {LessonDescription} from "../components/lessonDescription/LessonDescription";
 import {addNewLessonToStateAC} from "../redux/lessonsReducer";
 import uuid from 'react-uuid'
+import {setPhrasesToInitialStateAC} from "../redux/phraseReducer";
+import {setWordsToInitialStateAC} from "../redux/wordsReducer";
+import {setDescriptionToInitialStateAC} from "../redux/newLessonDescriptionReducer";
+import {setCurrentRowToInitialStateAC} from "../redux/currentRowReducer";
 
 export const CreateLesson = () => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => state)
+    const history = useHistory()
 
     const createNewLesson = ()=>{
         dispatch(addNewLessonToStateAC(
@@ -25,9 +31,13 @@ export const CreateLesson = () => {
                 }
             }
         ))
-
-
+        dispatch(setPhrasesToInitialStateAC())
+        dispatch(setWordsToInitialStateAC())
+        dispatch(setDescriptionToInitialStateAC())
+        dispatch(setCurrentRowToInitialStateAC())
+        history.push(`/`)
     }
+
 
 
     return (

@@ -1,8 +1,6 @@
 import * as firebase from "firebase";
 
 const ADD_NEW_LESSON = "ADD_NEW_LESSON"
-const B_B = "B_B"
-const C_C = "C_C"
 
 let initialState = {
     createdLessons: [
@@ -42,14 +40,12 @@ let initialState = {
     ]
 }
 
+
 export let lessonsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NEW_LESSON:
             return {...state, createdLessons:[...state.createdLessons, action.payload]}
-        case B_B:
-            return {...state, password: action.text}
-        case C_C:
-            return {...state, register: action.text}
+
         default :
             return state
     }
@@ -57,9 +53,6 @@ export let lessonsReducer = (state = initialState, action) => {
 
 export const addNewLessonToStateAC = (payload) => ({type: ADD_NEW_LESSON, payload: payload,})
 
-export const bbbbAC = (text) => ({type: B_B, text: text,})
-
-export const ccccAC = () => ({type: C_C,})
 
 
 

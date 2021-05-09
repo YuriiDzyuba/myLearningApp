@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react'
 import {ExcelRenderer} from "react-excel-renderer";
 import {useDispatch, useSelector} from "react-redux";
-import {addWordsToStateAC} from "../redux/wordsReducer";
-import {addPhrasesToStateAC} from "../redux/phraseReducer";
+import {addWordsToStateAC} from "../../redux/wordsReducer";
+import {addPhrasesToStateAC} from "../../redux/phraseReducer";
 import {TableMaker} from "./TableMaker";
 
 

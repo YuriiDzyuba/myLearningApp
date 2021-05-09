@@ -1,16 +1,10 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import "./modal.scss"
 import {useDispatch, useSelector} from "react-redux";
-import {
-    onContentChangeAC,
-    onHeaderChangeAC,
-    onPictureUrlChangeAC,
-    onRowNumberChangeAC
-} from "../redux/currentRowReducer";
-import {addChangedRowAC} from "../redux/wordsReducer";
-import {InputField} from "./InputField";
-import {DropdownButton} from "./lessonDescription/DropdownButton";
-import {addChangedPhrasesRowAC} from "../redux/phraseReducer";
+import {addChangedRowAC} from "../../redux/wordsReducer";
+import {InputField} from "../InputField";
+import {DropdownButton} from "../lessonDescription/DropdownButton";
+import {addChangedPhrasesRowAC} from "../../redux/phraseReducer";
 
 export const ModalContent = ({closeModal, type}) => {
 

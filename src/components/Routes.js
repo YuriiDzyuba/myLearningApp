@@ -5,6 +5,8 @@ import {CreateLesson} from "../pages/CreateLesson";
 import {HomePage} from "../pages/HomePage";
 import {RegisterPage} from "../pages/RegisterPage";
 import {MyLessons} from "../pages/MyLessons";
+import {EditLesson} from "../pages/EditLesson";
+import {PlayLesson} from "../pages/PlayLesson";
 
 export const Routes = (isAutentificate) => {
     console.log(isAutentificate, "is Auth")
@@ -18,6 +20,13 @@ export const Routes = (isAutentificate) => {
                     <CreateLesson/>
                 </Route>
                 <Route path="/lesson/:id">
+
+                </Route>
+                <Route path="/editLesson/:id">
+                    <EditLesson/>
+                </Route>
+                <Route path="/play/:id">
+                    <PlayLesson/>
                 </Route>
                 <Redirect to="/myLessons"/>
             </Switch>

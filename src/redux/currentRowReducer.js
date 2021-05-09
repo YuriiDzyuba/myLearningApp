@@ -5,6 +5,7 @@ const NEW_NUMBER = "NEW_NUMBER"
 const NEW_HEADER = "NEW_HEADER"
 const NEW_CONTENT = "NEW_CONTENT"
 const NEW_PICTURE_URL = "NEW_PICTURE_URL"
+const SET_CURRENT_ROW_INITIAL_STATE = "SET_CURRENT_ROW_INITIAL_STATE"
 
 
 let initialState = {
@@ -23,6 +24,8 @@ export let currentRowReducer = (state = initialState, action) => {
         case NEW_CONTENT:
         case NEW_PICTURE_URL:
             return {...state, ...action.payload}
+        case SET_CURRENT_ROW_INITIAL_STATE:
+            return initialState
         default :
             return state
     }
@@ -37,6 +40,8 @@ export const onHeaderChangeAC = (payload) => ({type: NEW_HEADER, payload: payloa
 export const onContentChangeAC = (payload) => ({type: NEW_CONTENT, payload: payload,})
 
 export const onPictureUrlChangeAC = (payload) => ({type: NEW_PICTURE_URL, payload: payload,})
+
+export const setCurrentRowToInitialStateAC = () => ({type: SET_CURRENT_ROW_INITIAL_STATE})
 
 
 

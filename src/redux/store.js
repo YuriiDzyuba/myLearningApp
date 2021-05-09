@@ -11,7 +11,8 @@ import {chosenTasksReducer} from "./chosenTasksReducer";
 import {newLessonDescriptionReducer} from "./newLessonDescriptionReducer";
 
 
-let reducers = combineReducers({
+
+let rootReducer = combineReducers({
    // tasks: mainReducer,
     lessons:lessonsReducer,
     words: wordsReducer,
@@ -23,7 +24,7 @@ let reducers = combineReducers({
 
 });
 
-export let store = createStore(reducers,
+export let store = createStore(rootReducer,
     composeWithDevTools(
         applyMiddleware(thunkMiddleware)
     )

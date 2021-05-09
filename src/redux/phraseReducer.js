@@ -2,7 +2,7 @@ import * as firebase from "firebase";
 
 const PHRASE_SET = "PHRASE_SET"
 const CHANGED_PHRASE_ROW = "CHANGED_PHRASE_ROW"
-const C_C = "C_C"
+const SET_PHRASE_INITIAL_STATE = "SET_PHRASE_INITIAL_STATE"
 
 let initialState = {
     dataLoaded: false,
@@ -18,8 +18,8 @@ export let phraseReducer = (state = initialState, action) => {
             let newRowsArray = state.rows.filter((elem,index)=>index !== parseInt(action.previousNumber) - 1)
             newRowsArray.splice(action.newNumber-1, 0, action.payload )
             return {...state, rows: newRowsArray}
-        case C_C:
-            return {...state, register: action.text}
+        case SET_PHRASE_INITIAL_STATE:
+            return initialState
         default :
             return state
     }
@@ -34,7 +34,8 @@ export const addChangedPhrasesRowAC = (previousNumber, newNumber, payload) => (
         newNumber: newNumber,
         payload: payload,
     })
-export const ccccAC = () => ({type: C_C,})
+
+export const setPhrasesToInitialStateAC = () => ({type: SET_PHRASE_INITIAL_STATE})
 
 
 

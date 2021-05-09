@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect} from "react";
-import "../functions/table.scss"
+import "../../functions/table.scss"
 import {Modal, useModal,ModalTransition} from 'react-simple-hook-modal';
 import "./modal.scss"
 import {ModalContent} from "./ModalContent";
 import {useDispatch, useSelector} from "react-redux";
-import {currentRowToStateAC} from "../redux/currentRowReducer";
+import {currentRowToStateAC} from "../../redux/currentRowReducer";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 
 export const TableMaker = ({table, type}) => {
