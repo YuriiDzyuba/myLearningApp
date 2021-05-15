@@ -1,18 +1,31 @@
 import {Link} from "react-router-dom";
-import React from "react";
+import React, {useContext} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {Loader} from "../Loader";
+import {loadLessons} from "../../redux/lessonsReducer";
+import {FireBaseContext} from "../../context/FireBaseContext";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 export const CreatedLessons = () => {
+    const {auth} = useContext(FireBaseContext)
+    const [user, loading, error] = useAuthState(auth)
     const dispatch = useDispatch()
-    const createdLessons = useSelector(state => state.lessons.createdLessons)
-    let lessonsCard = createdLessons.map((e, i) => {
+    const lessons = useSelector(state => state.lessons)
+
+    if (!lessons.loaded){
+        dispatch(loadLessons(user.uid))
+        return <Loader/>
+    }
+
+    let lessonsCard = lessons.createdLessons.length>0 ? lessons.createdLessons.map((e, i) => {
 
         return (
             <div className="col-3 m-3"
                  key={i}
             >
-                <div className="card rounded-5">
-
+                <div className="card rounded-5"
+                     style={{width: "100%"}}
+                >
                     <img src={e.pic}
                          className="card-img-top"
                          alt="..."
@@ -41,7 +54,7 @@ export const CreatedLessons = () => {
                 </div>
             </div>
         )
-    })
+    }) : null
 
     return (
         <div className='d-flex flex-row justify-content-center flex-wrap'>

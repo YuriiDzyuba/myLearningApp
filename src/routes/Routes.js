@@ -7,6 +7,7 @@ import {RegisterPage} from "../pages/RegisterPage";
 import {MyLessons} from "../pages/MyLessons";
 import {EditLesson} from "../pages/EditLesson";
 import {PlayLesson} from "../pages/PlayLesson";
+import {CreateLessonToApp} from "../pages/CreateLessonToApp/CreateLessonToApp";
 
 export const Routes = (isAutentificate) => {
     console.log(isAutentificate, "is Auth")
@@ -18,6 +19,9 @@ export const Routes = (isAutentificate) => {
                 </Route>
                 <Route path="/createLesson">
                     <CreateLesson/>
+                </Route>
+                <Route path="/createLessonToApp">
+                    <CreateLessonToApp/>
                 </Route>
                 <Route path="/lesson/:id">
 

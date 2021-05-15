@@ -1,7 +1,8 @@
-import React, {Fragment, useRef, useState} from "react";
+import React, {Fragment, useRef} from "react";
+import {useDispatch} from "react-redux";
 
-export const DropdownButton = ({label, items, currentOrder, setCurrentOrder}) => {
-
+export const DropdownButtonToText = ({label, items, num, currentValue, setCurrentValue}) => {
+    const dispatch = useDispatch()
     const orderButton = useRef()
     let itemArr
     items.length>0 ? itemArr=items : itemArr=[""]
@@ -13,11 +14,11 @@ export const DropdownButton = ({label, items, currentOrder, setCurrentOrder}) =>
                 <span
                     style={{cursor:"pointer"}}
                     onClick={() => {
-                        setCurrentOrder(i+1)
+                        dispatch(setCurrentValue(e, num))
                         orderButton.current.click()
                     }}
                     className="dropdown-item"
-                   >{i+1}
+                >{e}
                 </span>
             </li>
         )
@@ -36,7 +37,7 @@ export const DropdownButton = ({label, items, currentOrder, setCurrentOrder}) =>
                     aria-expanded="false"
                     style={{width: "100%"}}
                 >
-                    {`${currentOrder}`}
+                    {`${currentValue}`}
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     {dropDown}

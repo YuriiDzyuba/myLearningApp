@@ -1,71 +1,25 @@
 import * as firebase from "firebase";
 
-const CHOOSE_TASK = "CHOOSE_TASK"
+const CHOSE_TASK = "CHOSE_TASK"
 
 const RESET_TASK = "RESET_TASK"
 
 let initialState = {
-    tasks: [
-        {
-            id: 1,
-            name: "dnd",
-            title: "dnd",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        },
-        {
-            id: 2,
-            name: "translateWords",
-            title: "translateWords",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        },
-        {
-            id: 3,
-            name: "createPhrases",
-            title: "createPhrases",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        },
-        {
-            id: 4,
-            name: "pasteWords",
-            title: "pasteWords",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        }, {
-            id: 4,
-            name: "pasteWords",
-            title: "pasteWords",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        }, {
-            id: 4,
-            name: "pasteWords",
-            title: "pasteWords",
-            description: "desk",
-            enable: false,
-            pic: "https://user-images.githubusercontent.com/2182637/53611918-54c1ff80-3c24-11e9-9917-66ac3cef513d.png",
-            settings: {}
-        },
-    ]
+    chosen: "",
+    available: {
+        dndTo4pic: "dndTo4pic",
+        dnd2VertColumn: "dnd2VertColumn",
+        translateWord: "translateWord",
+        translateSentence: "translateSentence",
+        listenAndChose: "listenAndChose"
+    }
 
 }
 
 export let availableTasksReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CHOOSE_TASK:
-            return {...state, ...state.tasks[action.id].enable = action.payload}
+        case CHOSE_TASK:
+            return {...state, chosen: action.payload}
         case RESET_TASK:
             return {initialState}
         default :
@@ -73,7 +27,7 @@ export let availableTasksReducer = (state = initialState, action) => {
     }
 }
 
-export const choseTaskAC = (id, payload) => ({type: CHOOSE_TASK, id: id, payload: payload,})
+export const choseTaskAC = (payload) => ({type: CHOSE_TASK, payload})
 
 export const resetStateAC = () => ({type: RESET_TASK})
 

@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {InputField} from "../InputField";
 import {DropdownButton} from "./DropdownButton";
 import {
-    addDescriptionAC,
     addLessonDescriptionAC,
     addLessonNameAC, addLessonNumberAC,
     addLessonPictureUrlChangeAC
@@ -13,7 +12,6 @@ import {
 export const LessonDescription = () => {
     const dispatch = useDispatch()
     const newLessonDescription = useSelector(state => state.newLessonDescription)
-    const items = useSelector(state => state.lessons.createdLessons)
 
     const setCurrentOrder = (val) => {
         dispatch(addLessonNumberAC(val))
@@ -34,17 +32,42 @@ export const LessonDescription = () => {
     return (
         <Fragment>
             <div className='d-flex flex-row mt-3 justify-content-center'>
-                <h3>Write lesson description </h3>
+                <h3>Write lesson headers and description </h3>
             </div>
-            <div className='d-flex flex-row mt-3 justify-content-around'>
-                <div className="col-2">
+            <div className='row'>
+                <div className="col-2 pl-3">
                     <DropdownButton
-                        items={items.concat([""])}
+                        label={"рівень:"}
+                        items={["",""]}
                         currentOrder={newLessonDescription.lessonNumber}
                         setCurrentOrder={setCurrentOrder}
                     />
                 </div>
-                <div className="col-9">
+                <div className="col-2 pl-3">
+                    <DropdownButton
+                        label={"юніт:"}
+                        items={["",""]}
+                        currentOrder={newLessonDescription.lessonNumber}
+                        setCurrentOrder={setCurrentOrder}
+                    />
+                </div>
+                <div className="col-2 pl-3">
+                    <DropdownButton
+                        label={"номер:"}
+                        items={["",""]}
+                        currentOrder={newLessonDescription.lessonNumber}
+                        setCurrentOrder={setCurrentOrder}
+                    />
+                </div>
+                <div className="col-2 pl-3">
+                    <DropdownButton
+                        label={"тип:"}
+                        items={["",""]}
+                        currentOrder={newLessonDescription.lessonNumber}
+                        setCurrentOrder={setCurrentOrder}
+                    />
+                </div>
+                <div className="col-4">
                     <InputField
                         label={"lesson name / header :"}
                         value={newLessonDescription.name}
@@ -64,7 +87,6 @@ export const LessonDescription = () => {
                     />
                 </div>
             </div>
-
         </Fragment>
     )
 }

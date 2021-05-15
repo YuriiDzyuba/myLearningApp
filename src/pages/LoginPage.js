@@ -1,9 +1,7 @@
 import React, {useContext} from 'react'
-import {logInAction} from "../functions/logInAction";
 import {useFormChanger} from "../hooks/useFormChanger";
 import {LogInForm} from "../components/LogInForm";
 import {FireBaseContext} from "../context/FireBaseContext";
-import firebase from "firebase";
 
 export const LoginPage = () => {
 
@@ -17,7 +15,7 @@ export const LoginPage = () => {
     }
 
     return (
-        <div className='row justify-content-md-center'>
+        <div className='row justify-content-md-center '>
             <div className="col col-md-4">
 
                 <form name="logIN"

@@ -1,40 +1,39 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useContext} from 'react'
 import {useHistory} from 'react-router-dom'
 import {ImportExcelFile} from "../components/table/ImportExcelFile";
 import {useDispatch, useSelector} from "react-redux";
 import {AddTasks} from "../components/AddTasks";
 import {LessonDescription} from "../components/lessonDescription/LessonDescription";
-import {addNewLessonToStateAC} from "../redux/lessonsReducer";
+import {addLesson, addNewLessonToStateAC} from "../redux/lessonsReducer";
 import uuid from 'react-uuid'
-import {setPhrasesToInitialStateAC} from "../redux/phraseReducer";
-import {setWordsToInitialStateAC} from "../redux/wordsReducer";
-import {setDescriptionToInitialStateAC} from "../redux/newLessonDescriptionReducer";
-import {setCurrentRowToInitialStateAC} from "../redux/currentRowReducer";
+import {FireBaseContext} from "../context/FireBaseContext";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 export const CreateLesson = () => {
 
+    const {auth} = useContext(FireBaseContext)
+    const [user, loading, error] = useAuthState(auth)
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     const history = useHistory()
 
-    const createNewLesson = ()=>{
-        dispatch(addNewLessonToStateAC(
-            {
-                id: uuid(),
-                name: state.newLessonDescription.name,
-                description:state.newLessonDescription.description,
-                pic:state.newLessonDescription.pictureUrl,
-                content:{
-                    words:state.words,
-                    phrases:state.phrases,
-                    tasks:state.availableTasks.tasks.filter(e=>e.enable)
-                }
+    const createNewLesson = async ()=>{
+        let newLesson = {
+            id: uuid(),
+            name: state.newLessonDescription.name,
+            description:state.newLessonDescription.description,
+            pic:state.newLessonDescription.pictureUrl,
+            content:{
+                words:state.words,
+                phrases:state.phrases,
+                tasks:state.availableTasks.tasks.filter(e=> {
+                   if (e.enable)
+                       return e.id
+                })
             }
-        ))
-        dispatch(setPhrasesToInitialStateAC())
-        dispatch(setWordsToInitialStateAC())
-        dispatch(setDescriptionToInitialStateAC())
-        dispatch(setCurrentRowToInitialStateAC())
+        }
+        console.log(newLesson,"newLesson")
+        await dispatch(addLesson(newLesson,user.uid))
         history.push(`/`)
     }
 
@@ -48,6 +47,7 @@ export const CreateLesson = () => {
                 </div>
             </div>
             <ImportExcelFile selectFileHeader={"Select file with words"} type={"words"}/>
+
             {
                 !state.words.dataLoaded
                 &&

@@ -14,11 +14,9 @@ const auth = firebase.auth()
 const firestore = firebase.firestore()
 
 ReactDOM.render(
-    <React.StrictMode>
         <FireBaseContext.Provider value={{auth, firestore}}>
             <App/>
-        </FireBaseContext.Provider>
-    </React.StrictMode>,
+        </FireBaseContext.Provider>,
     document.getElementById('root')
 );
 

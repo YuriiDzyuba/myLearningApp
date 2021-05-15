@@ -1,8 +1,7 @@
 import React, {Fragment} from "react";
-import {useDispatch} from "react-redux";
 
-export const InputField = ({label, value, id, onChange}) => {
-    const dispatch = useDispatch()
+export const InputFieldModal = ({label, value, id, onChange}) => {
+
     return (
         <Fragment>
             <label htmlFor="basic-url" className="form-label">{label}</label>
@@ -14,7 +13,7 @@ export const InputField = ({label, value, id, onChange}) => {
                        aria-describedby="inputGroup-sizing-default"
                        value={value}
                        onChange={(event) => {
-                           dispatch(onChange(event.target.value))
+                           onChange(event.target.value)
 
                        }}
 
